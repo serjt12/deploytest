@@ -9,7 +9,7 @@ import TravelList from '../../components/TravelList';
 import { fetchTravels } from '../../TravelActions';
 
 // Import Selectors
-import { getShowAddTravel } from '../../../Home/HomeReducer';
+import { getShowAddTravel } from '../../../App/AppReducer';
 import { getTravels } from '../../TravelReducer';
 
 class TravelListPage extends Component {
@@ -32,7 +32,7 @@ TravelListPage.need = [() => { return fetchTravels(); }];
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
-    showAddTravel: getShowAddTravel(state.home.showAddTravel),
+    showAddTravel: getShowAddTravel(state),
     travels: getTravels(state),
   };
 }

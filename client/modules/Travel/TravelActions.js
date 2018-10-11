@@ -3,13 +3,21 @@ import callApi from '../../util/apiCaller';
 // Export Constants
 export const ADD_TRAVEL = 'ADD_TRAVEL';
 export const ADD_TRAVELS = 'ADD_TRAVELS';
+export const ADD_MY_TRAVELS = 'ADD_MY_TRAVELS';
 export const DELETE_TRAVEL = 'DELETE_TRAVEL';
+export const SHOW_MSG = 'SHOW_MSG';
 
 // Export Actions
 export function addTravel(travel) {
   return {
     type: ADD_TRAVEL,
     travel,
+  };
+}
+export function showMsg(msg) {
+  return {
+    type: SHOW_MSG,
+    msg,
   };
 }
 
@@ -24,8 +32,10 @@ export function addTravelRequest(travel) {
         price: travel.price,
         model: travel.model,
         content: travel.content,
+        traveltype: travel.traveltype,
+        sits: travel.sits,
       },
-    }).then(res => dispatch(addTravel(res.travel)));
+    }).then((res) => ((res.msg) ? dispatch(showMsg(res.msg)) : dispatch(addTravel(res.travel))));
   };
 }
 

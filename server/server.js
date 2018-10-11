@@ -1,7 +1,10 @@
 import Express from 'express';
+import corsPrefetch from 'cors-prefetch-middleware';
 import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import cookieSession from 'cookie-session';
+import cors from 'cors';
 import path from 'path';
 import IntlWrapper from '../client/modules/Intl/IntlWrapper';
 import favicon96 from './favicon/favicon96.png';
@@ -10,6 +13,7 @@ import favicon192 from './favicon/favicon192.png';
 
 // Initialize the Express App
 const app = new Express();
+const passport = require('./util/passport/passport');
 
 // Set Development modes checks
 const isDevMode = process.env.NODE_ENV === 'development' || false;
@@ -45,11 +49,14 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
 import Helmet from 'react-helmet';
 
+
 // Import required modules
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
-import posts from './routes/post.routes';
-import dummyData from './dummyData';
+import auth from './routes/auth.routes';
+import currentUser from './routes/currentUser.routes';
+import travel from './routes/travel.routes';
+import user from './routes/user.routes';
 import serverConfig from './config';
 
 // Set native promises as mongoose promise
@@ -62,9 +69,6 @@ if (process.env.NODE_ENV !== 'test') {
       console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
       throw error;
     }
-
-    // feed some dummy data in DB.
-    dummyData();
   });
 }
 
@@ -72,8 +76,33 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
+app.use(corsPrefetch);
+app.use(cors());
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [serverConfig.cookieKey],
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api', posts);
+app.use('/auth', auth);
+app.use('/api', currentUser);
+app.use('/api', travel);
+app.use('/api', user);
+
+const accountSid = 'ACd24751f50dd2fc77ff2a7f23e1e8d629'; // Your Account SID from www.twilio.com/console
+const authToken = 'c43e640c087b9646a7d5c39ce1599c25';   // Your Auth Token from www.twilio.com/console
+import Twilio from 'twilio';
+const client = new Twilio(accountSid, authToken);
+client.messages.create({
+  body: 'Holita de Tobcity!!!',
+  to: '+573053386099',  // Text this number
+  from: '+573015999375', // From a valid Twilio number
+})
+// eslint-disable-next-line
+.then((message) => console.log(message.sid));
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
@@ -92,11 +121,18 @@ const renderFullPage = (html, initialState) => {
         ${head.link.toString()}
         ${head.script.toString()}
 
-        ${isProdMode ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
+        ${isProdMode ? `<link rel='stylesheet' href='${assetsManifest['/main.css']}' />` : ''}
         <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'/>
         <link rel="icon" type="image/png" href=${favicon96} sizes="96x96" />
         <link rel="icon" type="image/png" href=${favicon144} sizes="144x144" />
         <link rel="icon" type="image/png" href=${favicon192} sizes="192x192" />
+        <title>Tobcity Viajes Compartidos!</title>
+        <meta name="description" content="Tobcity te permite ahorrar dinero, ayudar el medio ambiente y llegar donde quieras." />
+        <link href="https://fonts.googleapis.com/css?family=Baloo+Tammudu|Quicksand|Raleway" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
       </head>
       <body>
         <div id="root">${process.env.NODE_ENV === 'production' ? html : `<div>${html}</div>`}</div>

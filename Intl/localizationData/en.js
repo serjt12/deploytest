@@ -14,10 +14,11 @@ export default {
     plate: 'License Plate of your car',
     price: 'Price for each person',
     model: 'Year of the car',
-    submit: 'Submit',
+    submit: 'SUBMIT',
     comment: 'What your passengers should know',
     logout: 'Log Out',
     loginface: 'Log in with Facebook',
     logingoogle: 'Log in with Google',
+    cellphonelogin: 'Log in with your cellphone number',
   },
 };

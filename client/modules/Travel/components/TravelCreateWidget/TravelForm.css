@@ -1,0 +1,167 @@
+.error {
+  color: red;
+  font-size: .65rem;
+  position: relative;
+  top: -17px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+.form-container {
+  border: 1px solid #f2e3d2;
+  background: rgba(222,223,223,1);
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(42,168,154)), to(rgb(42,168,154)));
+  background: -webkit-linear-gradient(top, rgb(42,168,154), rgb(42,168,154));
+  background: -moz-linear-gradient(top, rgb(42,168,154), rgb(42,168,154));
+  background: -ms-linear-gradient(top, rgb(42,168,154), rgb(42,168,154));
+  background: -o-linear-gradient(top, rgb(42,168,154), rgb(42,168,154));
+  background-image: -ms-linear-gradient(top, rgb(42,168,154) 0%, rgb(42,168,154) 100%);
+  border-radius: 8px;
+  box-shadow: rgba(000,000,000,0.9) 0 1px 2px, inset rgba(255,255,255,0.4) 0 0px 0;
+  font-family: 'Helvetica Neue',Helvetica,sans-serif;
+  text-decoration: none;
+  vertical-align: middle;
+  min-width:300px;
+  padding:20px;
+  text-align: center;
+}
+input {
+  border: 1px solid #6b6363;
+  background: #e8e8e8;
+  border-radius: 4px;
+  color: #09360f;
+  box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+  padding:8px;
+  margin-bottom:20px;
+  width:280px;
+}
+
+input:focus {
+ background: #ffffff;
+ color: #000000;
+ }
+
+ .submit-container {
+    margin:8px 0;
+    text-align:right;
+  }
+.submit-button {
+  cursor: pointer;
+  border: 1px solid gray;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+  color: #00857e;
+  font-family: helvetica, serif;
+  padding: 8.5px 18px;
+  font-size: 11px;
+  text-decoration: none;
+  vertical-align: middle;
+  position: relative;
+  right: 20px;
+  top: 11px;
+}
+.submit-button:hover {
+  border: 1px solid #447314;
+  text-shadow: #31540c 0 1px 0;
+  background: #fac94b;
+  background-image: -ms-linear-gradient(top, #8dc059 0%, #6aa436 100%);
+  color: #666464;
+}
+.submit-button:active {
+  text-shadow: #31540c 0 1px 0;
+  border: 1px solid #447314;
+  background: #8dc059;
+  background: -webkit-gradient(linear, left top, left bottom, from(#6aa436), to(#6aa436));
+  background-image: -ms-linear-gradient(top, #6aa436 0%, #8dc059 100%);
+  color: #fff;
+}
+
+.radio-container{
+  display: block;
+  top: 0px;
+  position: relative;
+  margin: 2px auto;
+  height: auto;
+  padding: 2px;
+}
+
+.select .error {
+ top: 2px;
+}
+
+.select {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 280px;
+}    .select select {
+        font-family: 'Arial';
+        display: inline-block;
+        width: 100%;
+        cursor: pointer;
+        padding: 10px 15px;
+        outline: 0;
+        border: 1px solid #6b6363;
+        border-radius: 4px;
+        background: #ffffff;
+        color: #7B7B7B;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+        .select select::-ms-expand {
+            display: none;
+        }
+        .select select:hover,
+        .select select:focus {
+            color: #030303;
+            background: #e9e9e9;
+        }
+        .select select:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+.select_arrow {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  width: 6px;
+  height: 6px;
+  border: solid #7B7B7B;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.select select:hover ~ .select_arrow,
+.select select:focus ~ .select_arrow {
+    border-top-color: #000000;
+}
+.select select:disabled ~ .select_arrow {
+    border-top-color: #CCCCCC;
+}
+
+.options {
+  display: flex;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.options img{
+  width: 55px;
+  height: 50px;
+}
+
+.mapContainer {
+  width: 367px;
+}
+
+.space {
+  height: 100px;
+}
